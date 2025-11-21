@@ -162,6 +162,82 @@ agentready demo --screenshot --record demo.gif
 
 ---
 
+### Add Bootstrap Quickstart to README.md
+
+**Priority**: P0 (Critical - Discoverability)
+
+**Description**: Add a dead-simple, copy-paste Bootstrap quickstart to README.md. Currently, bootstrap documentation only exists in docs/user-guide.md, but README.md (the first thing users see on GitHub) has zero mentions of the bootstrap command.
+
+**Problem**:
+- New users landing on GitHub see only `agentready assess` commands
+- Bootstrap command (the recommended entry point) is buried in documentation
+- Missing the "most dead simple copy paste thing" for bootstrap
+
+**Requirements**:
+- Add prominent Bootstrap quickstart section to README.md
+- 4-5 line copy-paste command sequence
+- Show what gets created (bullets with checkmarks)
+- Link to detailed tutorial in docs/user-guide.md
+- Position ABOVE or alongside the assess quickstart
+
+**Implementation**:
+
+Add to README.md after Installation section:
+
+```markdown
+## Quick Start: Bootstrap (Recommended)
+
+Transform your repository with one command:
+
+```bash
+cd /path/to/your/repo
+agentready bootstrap .
+git add . && git commit -m "build: Bootstrap agent-ready infrastructure"
+git push
+```
+
+**What you get:**
+- ✅ GitHub Actions workflows (tests, security, AgentReady assessment)
+- ✅ Pre-commit hooks (formatters, linters)
+- ✅ Issue/PR templates
+- ✅ Dependabot configuration
+- ✅ Automated assessment on every PR
+
+**Duration**: <60 seconds
+
+[See detailed Bootstrap tutorial →](docs/user-guide.md#bootstrap-your-repository)
+
+---
+
+## Quick Start: Assessment Only
+
+For one-time analysis without infrastructure changes:
+
+```bash
+cd /path/to/your/repo
+agentready assess .
+open .agentready/report-latest.html
+```
+```
+
+**Acceptance Criteria**:
+- [ ] Bootstrap quickstart added to README.md
+- [ ] Positioned prominently (before or alongside assess quickstart)
+- [ ] Maximum 10 lines of code
+- [ ] Shows clear value prop (what you get)
+- [ ] Links to detailed docs
+- [ ] Uses conventional commit message format
+
+**Related**: Bootstrap command (#3 - already implemented), Documentation workflow, User onboarding
+
+**Notes**:
+- Bootstrap is already implemented - this is just documentation
+- README.md is the entry point for 90% of users
+- This is blocking adoption - users don't know bootstrap exists
+- Should match the style in docs/user-guide.md lines 87-115
+
+---
+
 ### Fix Critical Security & Logic Bugs from Code Review
 
 **Priority**: P0 (Critical - Security & Correctness)

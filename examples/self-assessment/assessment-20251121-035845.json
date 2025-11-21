@@ -1,0 +1,561 @@
+{
+  "repository": {
+    "path": "/Users/jeder/repos/sk/agentready",
+    "name": "agentready",
+    "url": "git@github.com:ambient-code/agentready.git",
+    "branch": "main",
+    "commit_hash": "f968aaeb4391bdd31cc815b69d0ce7d5c3d99bce",
+    "languages": {
+      "YAML": 9,
+      "Markdown": 72,
+      "Shell": 5,
+      "JSON": 3,
+      "Python": 36
+    },
+    "total_files": 150,
+    "total_lines": 65059
+  },
+  "timestamp": "2025-11-21T03:58:45.449559",
+  "overall_score": 80.0,
+  "certification_level": "Gold",
+  "attributes_assessed": 10,
+  "attributes_skipped": 15,
+  "attributes_total": 25,
+  "findings": [
+    {
+      "attribute": {
+        "id": "claude_md_file",
+        "name": "CLAUDE.md Configuration Files",
+        "category": "Context Window Optimization",
+        "tier": 1,
+        "description": "Project-specific configuration for Claude Code",
+        "criteria": "CLAUDE.md file exists in repository root",
+        "default_weight": 0.1
+      },
+      "status": "pass",
+      "score": 100.0,
+      "measured_value": "present",
+      "threshold": "present",
+      "evidence": [
+        "CLAUDE.md found at /Users/jeder/repos/sk/agentready/CLAUDE.md"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "readme_structure",
+        "name": "README Structure",
+        "category": "Documentation Standards",
+        "tier": 1,
+        "description": "Well-structured README with key sections",
+        "criteria": "README.md with installation, usage, and development sections",
+        "default_weight": 0.1
+      },
+      "status": "pass",
+      "score": 100.0,
+      "measured_value": "3/3 sections",
+      "threshold": "3/3 sections",
+      "evidence": [
+        "Found 3/3 essential sections",
+        "Installation: \u2713",
+        "Usage: \u2713",
+        "Development: \u2713"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "type_annotations",
+        "name": "Type Annotations",
+        "category": "Code Quality",
+        "tier": 1,
+        "description": "Type hints in function signatures",
+        "criteria": ">80% of functions have type annotations",
+        "default_weight": 0.1
+      },
+      "status": "pass",
+      "score": 100.0,
+      "measured_value": "96.5%",
+      "threshold": "\u226580%",
+      "evidence": [
+        "Typed functions: 167/173",
+        "Coverage: 96.5%"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "standard_layout",
+        "name": "Standard Project Layouts",
+        "category": "Repository Structure",
+        "tier": 1,
+        "description": "Follows standard project structure for language",
+        "criteria": "Standard directories (src/, tests/, docs/) present",
+        "default_weight": 0.1
+      },
+      "status": "pass",
+      "score": 100.0,
+      "measured_value": "2/2 directories",
+      "threshold": "2/2 directories",
+      "evidence": [
+        "Found 2/2 standard directories",
+        "src/: \u2713",
+        "tests/: \u2713"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "lock_files",
+        "name": "Lock Files for Reproducibility",
+        "category": "Dependency Management",
+        "tier": 1,
+        "description": "Lock files present for dependency pinning",
+        "criteria": "package-lock.json, yarn.lock, poetry.lock, or requirements.txt with versions",
+        "default_weight": 0.1
+      },
+      "status": "fail",
+      "score": 0.0,
+      "measured_value": "none",
+      "threshold": "at least one lock file",
+      "evidence": [
+        "No lock files found"
+      ],
+      "remediation": {
+        "summary": "Add lock file for dependency reproducibility",
+        "steps": [
+          "Use npm install, poetry lock, or equivalent to generate lock file"
+        ],
+        "tools": [],
+        "commands": [
+          "npm install  # generates package-lock.json"
+        ],
+        "examples": [],
+        "citations": []
+      },
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "test_coverage",
+        "name": "Test Coverage Requirements",
+        "category": "Testing & CI/CD",
+        "tier": 2,
+        "description": "Test coverage thresholds configured and enforced",
+        "criteria": ">80% code coverage",
+        "default_weight": 0.03
+      },
+      "status": "pass",
+      "score": 100.0,
+      "measured_value": "configured",
+      "threshold": "configured with >80% threshold",
+      "evidence": [
+        "Coverage configuration found",
+        "pytest-cov dependency present"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "precommit_hooks",
+        "name": "Pre-commit Hooks & CI/CD Linting",
+        "category": "Testing & CI/CD",
+        "tier": 2,
+        "description": "Pre-commit hooks configured for linting and formatting",
+        "criteria": ".pre-commit-config.yaml exists",
+        "default_weight": 0.03
+      },
+      "status": "pass",
+      "score": 100.0,
+      "measured_value": "configured",
+      "threshold": "configured",
+      "evidence": [
+        ".pre-commit-config.yaml found"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "conventional_commits",
+        "name": "Conventional Commit Messages",
+        "category": "Git & Version Control",
+        "tier": 2,
+        "description": "Follows conventional commit format",
+        "criteria": "\u226580% of recent commits follow convention",
+        "default_weight": 0.03
+      },
+      "status": "fail",
+      "score": 0.0,
+      "measured_value": "not configured",
+      "threshold": "configured",
+      "evidence": [
+        "No commitlint or husky configuration"
+      ],
+      "remediation": {
+        "summary": "Configure conventional commits with commitlint",
+        "steps": [
+          "Install commitlint",
+          "Configure husky for commit-msg hook"
+        ],
+        "tools": [
+          "commitlint",
+          "husky"
+        ],
+        "commands": [
+          "npm install --save-dev @commitlint/cli @commitlint/config-conventional husky"
+        ],
+        "examples": [],
+        "citations": []
+      },
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "gitignore_completeness",
+        "name": ".gitignore Completeness",
+        "category": "Git & Version Control",
+        "tier": 2,
+        "description": "Comprehensive .gitignore file",
+        "criteria": ".gitignore exists and covers common patterns",
+        "default_weight": 0.03
+      },
+      "status": "pass",
+      "score": 100.0,
+      "measured_value": "580 bytes",
+      "threshold": ">50 bytes",
+      "evidence": [
+        ".gitignore found (580 bytes)"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "cyclomatic_complexity",
+        "name": "Cyclomatic Complexity Thresholds",
+        "category": "Code Quality",
+        "tier": 3,
+        "description": "Cyclomatic complexity thresholds enforced",
+        "criteria": "Average complexity <10, no functions >15",
+        "default_weight": 0.03
+      },
+      "status": "pass",
+      "score": 100.0,
+      "measured_value": "3.1",
+      "threshold": "<10.0",
+      "evidence": [
+        "Average cyclomatic complexity: 3.1"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "one_command_setup",
+        "name": "One-Command Build/Setup",
+        "category": "Build & Development",
+        "tier": 2,
+        "description": "Assessment for One-Command Build/Setup",
+        "criteria": "To be implemented",
+        "default_weight": 0.03
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "One-Command Build/Setup assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "concise_documentation",
+        "name": "Concise Structured Documentation",
+        "category": "Context Window Optimization",
+        "tier": 2,
+        "description": "Assessment for Concise Structured Documentation",
+        "criteria": "To be implemented",
+        "default_weight": 0.03
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "Concise Structured Documentation assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "inline_documentation",
+        "name": "Inline Documentation",
+        "category": "Documentation Standards",
+        "tier": 2,
+        "description": "Assessment for Inline Documentation",
+        "criteria": "To be implemented",
+        "default_weight": 0.03
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "Inline Documentation assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "file_size_limits",
+        "name": "File Size Limits",
+        "category": "Context Window Optimization",
+        "tier": 2,
+        "description": "Assessment for File Size Limits",
+        "criteria": "To be implemented",
+        "default_weight": 0.03
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "File Size Limits assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "dependency_freshness",
+        "name": "Dependency Freshness & Security",
+        "category": "Dependency Management",
+        "tier": 2,
+        "description": "Assessment for Dependency Freshness & Security",
+        "criteria": "To be implemented",
+        "default_weight": 0.03
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "Dependency Freshness & Security assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "separation_concerns",
+        "name": "Separation of Concerns",
+        "category": "Repository Structure",
+        "tier": 2,
+        "description": "Assessment for Separation of Concerns",
+        "criteria": "To be implemented",
+        "default_weight": 0.03
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "Separation of Concerns assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "structured_logging",
+        "name": "Structured Logging",
+        "category": "Error Handling",
+        "tier": 3,
+        "description": "Assessment for Structured Logging",
+        "criteria": "To be implemented",
+        "default_weight": 0.03
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "Structured Logging assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "openapi_specs",
+        "name": "OpenAPI/Swagger Specifications",
+        "category": "API Documentation",
+        "tier": 3,
+        "description": "Assessment for OpenAPI/Swagger Specifications",
+        "criteria": "To be implemented",
+        "default_weight": 0.03
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "OpenAPI/Swagger Specifications assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "architecture_decisions",
+        "name": "Architecture Decision Records",
+        "category": "Documentation Standards",
+        "tier": 3,
+        "description": "Assessment for Architecture Decision Records",
+        "criteria": "To be implemented",
+        "default_weight": 0.03
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "Architecture Decision Records assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "semantic_naming",
+        "name": "Semantic File & Directory Naming",
+        "category": "Modularity",
+        "tier": 3,
+        "description": "Assessment for Semantic File & Directory Naming",
+        "criteria": "To be implemented",
+        "default_weight": 0.03
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "Semantic File & Directory Naming assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "security_scanning",
+        "name": "Security Scanning Automation",
+        "category": "Security",
+        "tier": 4,
+        "description": "Assessment for Security Scanning Automation",
+        "criteria": "To be implemented",
+        "default_weight": 0.01
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "Security Scanning Automation assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "performance_benchmarks",
+        "name": "Performance Benchmarks",
+        "category": "Performance",
+        "tier": 4,
+        "description": "Assessment for Performance Benchmarks",
+        "criteria": "To be implemented",
+        "default_weight": 0.01
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "Performance Benchmarks assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "code_smells",
+        "name": "Code Smell Elimination",
+        "category": "Code Quality",
+        "tier": 4,
+        "description": "Assessment for Code Smell Elimination",
+        "criteria": "To be implemented",
+        "default_weight": 0.01
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "Code Smell Elimination assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "issue_pr_templates",
+        "name": "Issue & Pull Request Templates",
+        "category": "Git & Version Control",
+        "tier": 4,
+        "description": "Assessment for Issue & Pull Request Templates",
+        "criteria": "To be implemented",
+        "default_weight": 0.01
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "Issue & Pull Request Templates assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    },
+    {
+      "attribute": {
+        "id": "container_setup",
+        "name": "Container/Virtualization Setup",
+        "category": "Build & Development",
+        "tier": 4,
+        "description": "Assessment for Container/Virtualization Setup",
+        "criteria": "To be implemented",
+        "default_weight": 0.01
+      },
+      "status": "not_applicable",
+      "score": null,
+      "measured_value": null,
+      "threshold": null,
+      "evidence": [
+        "Container/Virtualization Setup assessment not yet implemented"
+      ],
+      "remediation": null,
+      "error_message": null
+    }
+  ],
+  "config": null,
+  "duration_seconds": 0.2
+}
