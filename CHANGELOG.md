@@ -1,3 +1,22 @@
+# 1.0.0 (2025-11-21)
+
+
+### Bug Fixes
+
+* Improve report metadata display with clean table format ([ca361a4](https://github.com/ambient-code/agentready/commit/ca361a44ccf58c277853739a0c856be388adb779))
+* P0 security and logic bugs from code review ([2af2346](https://github.com/ambient-code/agentready/commit/2af234661d94bcedaa9473fbf4925f8fd382d62c))
+
+
+### Features
+
+* Add Interactive Dashboard backlog item ([adfc4c8](https://github.com/ambient-code/agentready/commit/adfc4c823a7b25d5b1404c9b994461e290257dce))
+* Add interactive HTML report generation ([18664ea](https://github.com/ambient-code/agentready/commit/18664eacea94e90ee2da222a09228771c67c17f0))
+* add release pipeline coldstart prompt ([#19](https://github.com/ambient-code/agentready/issues/19)) ([9a3880c](https://github.com/ambient-code/agentready/commit/9a3880c6a04014a30b4405c301c34aac5170a394)), closes [#18](https://github.com/ambient-code/agentready/issues/18)
+* Complete Phases 5-7 - Markdown reports, testing, and polish ([7659623](https://github.com/ambient-code/agentready/commit/76596230e7fe2a5523432a3450430051d45b565f))
+* Implement AgentReady MVP with scoring engine ([54a96cb](https://github.com/ambient-code/agentready/commit/54a96cbafc37dfc0f67dc12833b3c789ee81bc53))
+* implement automated semantic release pipeline ([#20](https://github.com/ambient-code/agentready/issues/20)) ([b579235](https://github.com/ambient-code/agentready/commit/b5792359fe1a42a3ddc5475748ba52af3b347d44))
+* implement bootstrap command for GitHub infrastructure ([0af06c4](https://github.com/ambient-code/agentready/commit/0af06c492cc487c8894203d096e9cb5a3259caa1)), closes [#2](https://github.com/ambient-code/agentready/issues/2)
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
