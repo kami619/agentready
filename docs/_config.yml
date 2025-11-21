@@ -10,7 +10,7 @@ description: >-
   evidence-based attributes with actionable remediation guidance.
 
 # Repository information
-repository: ambient-code/agentready
+repository: https://github.com/ambient-code/agentready
 github_username: ambient-code
 
 # Build settings
