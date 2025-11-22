@@ -2,8 +2,6 @@
 
 from pathlib import Path
 
-import pytest
-
 from agentready.assessors.documentation import CLAUDEmdAssessor, READMEAssessor
 from agentready.reporters.html import HTMLReporter
 from agentready.reporters.markdown import MarkdownReporter
