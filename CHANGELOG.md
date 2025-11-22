@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/ambient-code/agentready/compare/v1.10.0...v1.11.0) (2025-11-22)
+
+
+### Features
+
+* Add research report management CLI commands ([#45](https://github.com/ambient-code/agentready/issues/45)) ([e1be488](https://github.com/ambient-code/agentready/commit/e1be4887d4cae184a9afe9207ea00d709d709a7c)), closes [#7](https://github.com/ambient-code/agentready/issues/7)
+
 # [1.10.0](https://github.com/ambient-code/agentready/compare/v1.9.0...v1.10.0) (2025-11-22)
 
 
