@@ -78,7 +78,7 @@ class BootstrapGenerator:
         # Determine test workflow language (fallback to python if template doesn't exist)
         test_language = self.language
         try:
-            self.env.get_template(f"workflows/tests-{test_language}.yml.j2")
+            self.env.get_template(f"{test_language}/workflows/tests.yml.j2")
         except Exception:
             # Template doesn't exist, fallback to python
             test_language = "python"
@@ -91,14 +91,14 @@ class BootstrapGenerator:
 
         # Tests workflow
         tests_workflow = workflows_dir / "tests.yml"
-        template = self.env.get_template(f"workflows/tests-{test_language}.yml.j2")
+        template = self.env.get_template(f"{test_language}/workflows/tests.yml.j2")
         content = template.render()
         created.append(self._write_file(tests_workflow, content, dry_run))
 
         # Security workflow
         security_workflow = workflows_dir / "security.yml"
-        template = self.env.get_template("workflows/security.yml.j2")
-        content = template.render(language=test_language)
+        template = self.env.get_template(f"{test_language}/workflows/security.yml.j2")
+        content = template.render()
         created.append(self._write_file(security_workflow, content, dry_run))
 
         return created
@@ -141,11 +141,11 @@ class BootstrapGenerator:
         # Determine language for template (fallback to python)
         template_language = self.language
         try:
-            template = self.env.get_template(f"precommit-{template_language}.yaml.j2")
+            template = self.env.get_template(f"{template_language}/precommit.yaml.j2")
         except Exception:
             # Template doesn't exist, fallback to python
             template_language = "python"
-            template = self.env.get_template(f"precommit-{template_language}.yaml.j2")
+            template = self.env.get_template(f"{template_language}/precommit.yaml.j2")
 
         content = template.render()
         return [self._write_file(precommit_file, content, dry_run)]

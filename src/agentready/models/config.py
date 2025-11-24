@@ -3,7 +3,7 @@
 from pathlib import Path
 from typing import Annotated
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from ..utils.security import validate_path
 
@@ -15,7 +15,7 @@ class Config(BaseModel):
     Replaces 85 lines of manual validation code with declarative field validators.
 
     Attributes:
-        weights: Custom attribute weights (attribute_id → weight 0.0-1.0, must sum to 1.0)
+        weights: Custom attribute weights (attribute_id → weight, positive values, allows boosting >1.0)
         excluded_attributes: Attributes to skip during assessment
         language_overrides: Force language detection (lang → glob patterns)
         output_dir: Custom output directory (None uses default .agentready/)
@@ -27,7 +27,7 @@ class Config(BaseModel):
         dict[str, float],
         Field(
             default_factory=dict,
-            description="Custom attribute weights (must sum to 1.0 if non-empty)",
+            description="Custom attribute weights (positive values, allows boosting >1.0)",
         ),
     ]
     excluded_attributes: Annotated[
@@ -63,26 +63,11 @@ class Config(BaseModel):
     @field_validator("weights")
     @classmethod
     def validate_weights(cls, v: dict[str, float]) -> dict[str, float]:
-        """Validate weight values are positive and between 0 and 1."""
+        """Validate weight values are positive (no upper limit - allow boosting)."""
         for attr_id, weight in v.items():
             if weight <= 0:
                 raise ValueError(f"Weight must be positive for {attr_id}: {weight}")
-            if weight > 1.0:
-                raise ValueError(f"Weight must be <= 1.0 for {attr_id}: {weight}")
         return v
-
-    @model_validator(mode="after")
-    def validate_weights_sum(self) -> "Config":
-        """Validate weights sum to 1.0 (if any weights provided)."""
-        if self.weights:
-            total = sum(self.weights.values())
-            tolerance = 0.001
-            if abs(total - 1.0) > tolerance:
-                raise ValueError(
-                    f"Weights must sum to 1.0 (got {total:.4f}, "
-                    f"difference: {total - 1.0:+.4f})"
-                )
-        return self
 
     @field_validator("language_overrides")
     @classmethod

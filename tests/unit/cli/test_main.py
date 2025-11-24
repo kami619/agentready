@@ -384,7 +384,7 @@ excluded_attributes:
         config_file = tmp_path / "config.yaml"
         config_file.write_text("- item1\n- item2")
 
-        with pytest.raises(ValueError, match="must be a YAML object/dict"):
+        with pytest.raises(ValueError, match="Config must be a dict"):
             load_config(config_file)
 
     def test_load_config_unknown_keys(self, tmp_path):
@@ -408,7 +408,7 @@ excluded_attributes:
         config_file = tmp_path / "config.yaml"
         config_file.write_text("weights:\n  attr1: not_a_number")
 
-        with pytest.raises(ValueError, match="Weight values must be numbers"):
+        with pytest.raises(ValueError, match="'weights' values must be"):
             load_config(config_file)
 
     def test_load_config_invalid_excluded_attributes(self, tmp_path):
@@ -424,7 +424,7 @@ excluded_attributes:
         config_file = tmp_path / "config.yaml"
         config_file.write_text("output_dir: /etc/passwords")
 
-        with pytest.raises(ValueError, match="cannot be in sensitive system directory"):
+        with pytest.raises(ValueError, match="Cannot be in sensitive system directory"):
             load_config(config_file)
 
     def test_load_config_invalid_report_theme(self, tmp_path):
@@ -432,7 +432,7 @@ excluded_attributes:
         config_file = tmp_path / "config.yaml"
         config_file.write_text("report_theme: 123")
 
-        with pytest.raises(ValueError, match="'report_theme' must be a string"):
+        with pytest.raises(ValueError, match="'report_theme' must be str"):
             load_config(config_file)
 
 

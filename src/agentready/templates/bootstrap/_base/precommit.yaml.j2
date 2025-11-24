@@ -1,3 +1,4 @@
+{# Base pre-commit configuration - common hooks for all languages #}
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
@@ -11,23 +12,13 @@ repos:
       - id: check-json
       - id: detect-private-key
 
-  - repo: https://github.com/psf/black
-    rev: 24.1.1
-    hooks:
-      - id: black
-        language_version: python3.12
+  {% block language_formatters %}
+  {# Language-specific formatters and linters (black, prettier, gofmt, etc.) #}
+  {% endblock %}
 
-  - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-        args: ["--profile", "black"]
-
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.14
-    hooks:
-      - id: ruff
-        args: ["--fix"]
+  {% block language_linters %}
+  {# Language-specific linters (ruff, eslint, golangci-lint, etc.) #}
+  {% endblock %}
 
   - repo: https://github.com/compilerla/conventional-pre-commit
     rev: v3.0.0

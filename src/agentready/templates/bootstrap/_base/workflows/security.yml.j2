@@ -1,3 +1,4 @@
+{# Base GitHub Actions security workflow - common structure for all languages #}
 name: Security
 
 on:
@@ -24,7 +25,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
-          languages: {{ 'python' if language == 'python' else 'javascript' }}
+          languages: {% block codeql_language %}{{ 'python' }}{% endblock %}
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@v3
@@ -32,25 +33,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
 
-{% if language == 'python' %}
-  safety:
-    name: Dependency Security Scan
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: |
-          pip install safety
-
-      - name: Run safety check
-        run: |
-          safety check --json || true
-{% endif %}
+  {% block language_security %}
+  {# Language-specific security scanning (e.g., safety for Python, npm audit for JS) #}
+  {% endblock %}
