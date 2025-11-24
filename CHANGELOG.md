@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/ambient-code/agentready/compare/v2.5.0...v2.6.0) (2025-11-24)
+
+
+### Features
+
+* Add SWE-bench experiment system for validating AgentReady impact ([#124](https://github.com/ambient-code/agentready/issues/124)) ([15edbba](https://github.com/ambient-code/agentready/commit/15edbba94c92bc578ae1445eed7ae1f2f1fe8482))
+
 # [2.5.0](https://github.com/ambient-code/agentready/compare/v2.4.0...v2.5.0) (2025-11-24)
 
 
