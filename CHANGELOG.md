@@ -1,3 +1,10 @@
+# [2.18.0](https://github.com/ambient-code/agentready/compare/v2.17.0...v2.18.0) (2025-12-10)
+
+
+### Features
+
+* add Harbor Terminal-Bench comparison for agent effectiveness ([#199](https://github.com/ambient-code/agentready/issues/199)) ([a56e318](https://github.com/ambient-code/agentready/commit/a56e31854c37838d1ed4724ff79d8506c9077d60))
+
 # [2.17.0](https://github.com/ambient-code/agentready/compare/v2.16.0...v2.17.0) (2025-12-10)
 
 
