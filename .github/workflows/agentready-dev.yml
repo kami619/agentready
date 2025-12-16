@@ -196,7 +196,6 @@ jobs:
       - name: Claude Code Action
         id: claude-code
         uses: anthropics/claude-code-action@v1
-        continue-on-error: true
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
