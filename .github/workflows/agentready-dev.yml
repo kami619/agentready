@@ -27,29 +27,104 @@ jobs:
       (github.event_name == 'issues' && (contains(github.event.issue.body, '@agentready-dev') || contains(github.event.issue.title, '@agentready-dev')))
     runs-on: ubuntu-latest
     steps:
+      - name: Determine event context
+        id: event-context
+        run: |
+          EVENT_NAME="${{ github.event_name }}"
+
+          # Determine if this is a PR-related event and get the PR number
+          {
+            if [ "$EVENT_NAME" == "pull_request_review_comment" ]; then
+              # pull_request_review_comment events have github.event.pull_request
+              PR_NUMBER="${{ github.event.pull_request.number }}"
+              echo "is_pr=true"
+              echo "pr_number=$PR_NUMBER"
+              echo "issue_number=$PR_NUMBER"
+            elif [ "$EVENT_NAME" == "pull_request_review" ]; then
+              # pull_request_review events have github.event.pull_request
+              PR_NUMBER="${{ github.event.pull_request.number }}"
+              echo "is_pr=true"
+              echo "pr_number=$PR_NUMBER"
+              echo "issue_number=$PR_NUMBER"
+            elif [ "$EVENT_NAME" == "issue_comment" ]; then
+              # issue_comment events have github.event.issue
+              ISSUE_NUMBER="${{ github.event.issue.number }}"
+              # Check if this issue is actually a PR by checking if pull_request.url exists
+              # GitHub Actions will return empty string if pull_request doesn't exist
+              PULL_REQUEST_URL="${{ github.event.issue.pull_request.url || '' }}"
+              if [ -n "$PULL_REQUEST_URL" ] && [ "$PULL_REQUEST_URL" != "null" ] && [ "$PULL_REQUEST_URL" != "undefined" ]; then
+                echo "is_pr=true"
+                echo "pr_number=$ISSUE_NUMBER"
+              else
+                echo "is_pr=false"
+              fi
+              echo "issue_number=$ISSUE_NUMBER"
+            elif [ "$EVENT_NAME" == "issues" ]; then
+              # issues events have github.event.issue
+              ISSUE_NUMBER="${{ github.event.issue.number }}"
+              # Check if this issue is actually a PR by checking if pull_request.url exists
+              # GitHub Actions will return empty string if pull_request doesn't exist
+              PULL_REQUEST_URL="${{ github.event.issue.pull_request.url || '' }}"
+              if [ -n "$PULL_REQUEST_URL" ] && [ "$PULL_REQUEST_URL" != "null" ] && [ "$PULL_REQUEST_URL" != "undefined" ]; then
+                echo "is_pr=true"
+                echo "pr_number=$ISSUE_NUMBER"
+              else
+                echo "is_pr=false"
+              fi
+              echo "issue_number=$ISSUE_NUMBER"
+            else
+              echo "is_pr=false"
+              echo "issue_number="
+            fi
+          } >> "$GITHUB_OUTPUT"
+
       - name: Get PR info for fork support
-        if: github.event.issue.pull_request
+        if: steps.event-context.outputs.is_pr == 'true'
         id: pr-info
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: ${{ github.repository }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          PR_NUMBER: ${{ steps.event-context.outputs.pr_number }}
+          EVENT_NAME: ${{ github.event_name }}
+          PR_HEAD_SHA_INPUT: ${{ github.event.pull_request.head.sha }}
+          PR_HEAD_REF_INPUT: ${{ github.event.pull_request.head.ref }}
+          PR_HEAD_OWNER_INPUT: ${{ github.event.pull_request.head.repo.owner.login }}
+          PR_HEAD_REPO_INPUT: ${{ github.event.pull_request.head.repo.name }}
+          PR_HEAD_FORK_INPUT: ${{ github.event.pull_request.head.repo.fork }}
         run: |
-          PR_DATA=$(gh api "repos/$REPOSITORY/pulls/$ISSUE_NUMBER")
+          # For pull_request_review_comment and pull_request_review events, we have direct access
+          if [ "$EVENT_NAME" == "pull_request_review_comment" ] || [ "$EVENT_NAME" == "pull_request_review" ]; then
+            PR_HEAD_SHA="$PR_HEAD_SHA_INPUT"
+            PR_HEAD_REF="$PR_HEAD_REF_INPUT"
+            PR_HEAD_OWNER="$PR_HEAD_OWNER_INPUT"
+            PR_HEAD_REPO="$PR_HEAD_REPO_INPUT"
+            IS_FORK="$PR_HEAD_FORK_INPUT"
+          else
+            # For issue_comment and issues events on PRs, fetch from API
+            PR_DATA=$(gh api "repos/$REPOSITORY/pulls/$PR_NUMBER")
+            PR_HEAD_SHA=$(echo "$PR_DATA" | jq -r '.head.sha')
+            PR_HEAD_REF=$(echo "$PR_DATA" | jq -r '.head.ref')
+            PR_HEAD_OWNER=$(echo "$PR_DATA" | jq -r '.head.repo.owner.login')
+            PR_HEAD_REPO=$(echo "$PR_DATA" | jq -r '.head.repo.name')
+            IS_FORK=$(echo "$PR_DATA" | jq -r '.head.repo.fork')
+          fi
+
           {
-            echo "pr_head_owner=$(echo "$PR_DATA" | jq -r '.head.repo.owner.login')"
-            echo "pr_head_repo=$(echo "$PR_DATA" | jq -r '.head.repo.name')"
-            echo "pr_head_ref=$(echo "$PR_DATA" | jq -r '.head.ref')"
-            echo "is_fork=$(echo "$PR_DATA" | jq -r '.head.repo.fork')"
+            echo "pr_head_owner=$PR_HEAD_OWNER"
+            echo "pr_head_repo=$PR_HEAD_REPO"
+            echo "pr_head_ref=$PR_HEAD_REF"
+            echo "pr_head_sha=$PR_HEAD_SHA"
+            echo "is_fork=$IS_FORK"
           } >> "$GITHUB_OUTPUT"
 
       - name: Extract user request
         id: extract-request
         env:
           EVENT_NAME: ${{ github.event_name }}
-          COMMENT_BODY: ${{ github.event.comment.body }}
-          REVIEW_BODY: ${{ github.event.review.body }}
-          ISSUE_BODY: ${{ github.event.issue.body }}
+          COMMENT_BODY: ${{ github.event.comment.body || '' }}
+          REVIEW_BODY: ${{ github.event.review.body || '' }}
+          ISSUE_BODY: ${{ github.event.issue.body || '' }}
+          ISSUE_TITLE: ${{ github.event.issue.title || '' }}
         run: |
           case "$EVENT_NAME" in
             issue_comment|pull_request_review_comment)
@@ -59,7 +134,12 @@ jobs:
               REQUEST="$REVIEW_BODY"
               ;;
             issues)
-              REQUEST="$ISSUE_BODY"
+              # Use body if available, otherwise use title
+              if [ -n "$ISSUE_BODY" ]; then
+                REQUEST="$ISSUE_BODY"
+              else
+                REQUEST="$ISSUE_TITLE"
+              fi
               ;;
             *)
               REQUEST="No request body found"
@@ -75,11 +155,34 @@ jobs:
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
+      - name: Determine checkout ref
+        id: checkout-ref
+        run: |
+          if [ "${{ steps.event-context.outputs.is_pr }}" == "true" ]; then
+            if [ "${{ steps.pr-info.outputs.is_fork }}" == "true" ]; then
+              # Fork: checkout the fork repository at the PR branch
+              echo "repository=${{ steps.pr-info.outputs.pr_head_owner }}/${{ steps.pr-info.outputs.pr_head_repo }}" >> "$GITHUB_OUTPUT"
+              echo "ref=${{ steps.pr-info.outputs.pr_head_ref }}" >> "$GITHUB_OUTPUT"
+            else
+              # Same repo PR: checkout at PR head SHA
+              echo "repository=${{ github.repository }}" >> "$GITHUB_OUTPUT"
+              echo "ref=${{ steps.pr-info.outputs.pr_head_sha }}" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            # Regular issue: checkout default branch (checkout action will use default if ref is empty)
+            echo "repository=${{ github.repository }}" >> "$GITHUB_OUTPUT"
+            # github.ref may not be set for issue events, so leave ref empty to use default branch
+            if [ -n "${{ github.ref }}" ] && [ "${{ github.ref }}" != "null" ]; then
+              echo "ref=${{ github.ref }}" >> "$GITHUB_OUTPUT"
+            fi
+            # If ref is empty, checkout action will use repository's default branch
+          fi
+
       - name: Checkout repository (fork-compatible)
         uses: actions/checkout@v6
         with:
-          repository: ${{ github.event.issue.pull_request && steps.pr-info.outputs.is_fork == 'true' && format('{0}/{1}', steps.pr-info.outputs.pr_head_owner, steps.pr-info.outputs.pr_head_repo) || github.repository }}
-          ref: ${{ github.event.issue.pull_request && steps.pr-info.outputs.pr_head_ref || github.ref }}
+          repository: ${{ steps.checkout-ref.outputs.repository }}
+          ref: ${{ steps.checkout-ref.outputs.ref || '' }}
           fetch-depth: 0
 
       - name: Claude Code Action
