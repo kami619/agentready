@@ -1,3 +1,42 @@
+# [2.14.0](https://github.com/kami619/agentready/compare/v2.13.0...v2.14.0) (2026-01-16)
+
+
+### Bug Fixes
+
+* add bounded retry logic for LLM rate limit handling ([#205](https://github.com/kami619/agentready/issues/205)) ([6ecb786](https://github.com/kami619/agentready/commit/6ecb78696c09880911ade14d0be1dd824be998dd)), closes [#104](https://github.com/kami619/agentready/issues/104)
+* **assessors:** FileSizeLimitsAssessor now respects .gitignore ([#248](https://github.com/kami619/agentready/issues/248)) ([eaaecc2](https://github.com/kami619/agentready/commit/eaaecc264683c612d6c0fb65b00dc3e22d394aa1)), closes [#245](https://github.com/kami619/agentready/issues/245)
+* **ci:** use gh pr view for fork PR number lookup in coverage comment ([#253](https://github.com/kami619/agentready/issues/253)) ([1688362](https://github.com/kami619/agentready/commit/16883621e2ea41db6a1ec0a3a164fb0a87fe5f9c))
+* downgrade docker/metadata-action to v5 and fix shellcheck warnings ([12f5509](https://github.com/kami619/agentready/commit/12f55098049fa0bb70de3d65e11cabf8a9fab22e))
+* enable Harbor task filtering for smoketest support ([#222](https://github.com/kami619/agentready/issues/222)) ([f780188](https://github.com/kami619/agentready/commit/f7801884690d72b2e5e7f28145275ae78127e6d0))
+* make E2E test timeouts configurable and add sensitive directory test ([#206](https://github.com/kami619/agentready/issues/206)) ([27e87e5](https://github.com/kami619/agentready/commit/27e87e52fa6cccc3bccf671d6fd4964b29817b04)), closes [#104](https://github.com/kami619/agentready/issues/104) [#192](https://github.com/kami619/agentready/issues/192)
+* prevent unauthorized message for non-command comments ([#262](https://github.com/kami619/agentready/issues/262)) ([84c6f69](https://github.com/kami619/agentready/commit/84c6f69f75f986825ecb0106aadb6a1bb3c8863b))
+* rename research report in data directory ([b8ddfdc](https://github.com/kami619/agentready/commit/b8ddfdc241b55ca42837bd144a9dd894c4d13fbb))
+* resolve all test suite failures - achieve zero failures ([#180](https://github.com/kami619/agentready/issues/180)) ([990fa2d](https://github.com/kami619/agentready/commit/990fa2d4725842df60af151d1ba058cd43a90d3c)), closes [#148](https://github.com/kami619/agentready/issues/148) [#147](https://github.com/kami619/agentready/issues/147) [#145](https://github.com/kami619/agentready/issues/145)
+* resolve YAML syntax error in continuous-learning workflow ([#172](https://github.com/kami619/agentready/issues/172)) ([3d40fcc](https://github.com/kami619/agentready/commit/3d40fcccd4e8d722303d322716454869ca7db9d0))
+* resolve YAML syntax error in update-docs workflow and add actionlint ([#173](https://github.com/kami619/agentready/issues/173)) ([97b06af](https://github.com/kami619/agentready/commit/97b06af1d2adc17ec385d658310f3562f19b1a95))
+* update --version flag to show correct version and research report date ([#221](https://github.com/kami619/agentready/issues/221)) ([5a85abb](https://github.com/kami619/agentready/commit/5a85abbb7ae2f9acbce6ae673672ca9851926297))
+* **workflows:** ensure post-comment step runs after Claude Code Action ([b087e5c](https://github.com/kami619/agentready/commit/b087e5ce53e68dcc67aa90eb394754c5f694e702))
+* **workflows:** handle all event types in agentready-dev workflow ([9b942bf](https://github.com/kami619/agentready/commit/9b942bf77f865c3924526d3b814d492ef945c0f3))
+* **workflows:** improve error handling and logging for comment posting ([9ea1e6b](https://github.com/kami619/agentready/commit/9ea1e6bc9c0a6381d855da0e235810203624bc54))
+* **workflows:** improve issue number extraction and add debug step ([ecd896b](https://github.com/kami619/agentready/commit/ecd896b9796bc40011f59ad621b70a10f678d08c))
+* **workflows:** remove if:always() to test step execution ([ff0bb12](https://github.com/kami619/agentready/commit/ff0bb1273fd4ad85b9cfad22fe1c555692bb23bc))
+* **workflows:** simplify post-comment step condition ([1bbf40a](https://github.com/kami619/agentready/commit/1bbf40a7a9d010939a90faa5092a3e097eb902c6))
+
+
+### Features
+
+* add Harbor Terminal-Bench comparison for agent effectiveness ([#199](https://github.com/kami619/agentready/issues/199)) ([a56e318](https://github.com/kami619/agentready/commit/a56e31854c37838d1ed4724ff79d8506c9077d60))
+* add Memory MCP server allow list to repository settings ([#203](https://github.com/kami619/agentready/issues/203)) ([41d87bb](https://github.com/kami619/agentready/commit/41d87bb546fa2a30e9126bc7cf93a6fb6b6f5ae0))
+* consolidate GitHub Actions workflows by purpose ([#217](https://github.com/kami619/agentready/issues/217)) ([717ca6b](https://github.com/kami619/agentready/commit/717ca6be9bf630798bfbd7590abaa95ab43d4355)), closes [#221](https://github.com/kami619/agentready/issues/221)
+* container support ([#171](https://github.com/kami619/agentready/issues/171)) ([c6874ea](https://github.com/kami619/agentready/commit/c6874ea035775ac86ef5012bbfdf52e7b96f556f))
+* convert AgentReady assessment to on-demand workflow ([#213](https://github.com/kami619/agentready/issues/213)) ([b5a1ce0](https://github.com/kami619/agentready/commit/b5a1ce03f5364351833733f034fcc2f7bf1bd49f)), closes [#191](https://github.com/kami619/agentready/issues/191)
+* enhance assessors with multi-language support and security ([#200](https://github.com/kami619/agentready/issues/200)) ([85712f2](https://github.com/kami619/agentready/commit/85712f242b10bfb6c195cddaca9ca7e57d453df8)), closes [#10](https://github.com/kami619/agentready/issues/10)
+* Harbor framework integration for Terminal-Bench evaluations ([#202](https://github.com/kami619/agentready/issues/202)) ([d73a8c8](https://github.com/kami619/agentready/commit/d73a8c851a72ae9185dd2c5d50c682c1f5e1ac06)), closes [#4](https://github.com/kami619/agentready/issues/4) [#178](https://github.com/kami619/agentready/issues/178) [#178](https://github.com/kami619/agentready/issues/178)
+* Redesign homepage features with two-column layout and research links ([#189](https://github.com/kami619/agentready/issues/189)) ([570087d](https://github.com/kami619/agentready/commit/570087df99eb612d4fe07128666cdd41461845f1)), closes [#187](https://github.com/kami619/agentready/issues/187)
+* replace markdown-link-check with lychee for link validation ([#177](https://github.com/kami619/agentready/issues/177)) ([f1a4545](https://github.com/kami619/agentready/commit/f1a4545e4718b735df3e1fa7e0b60eba9ed0173b))
+* Terminal-Bench eval harness (MVP Phase 1) ([#178](https://github.com/kami619/agentready/issues/178)) ([d06bab4](https://github.com/kami619/agentready/commit/d06bab42848847df26d83c7a44e5ee0e84ae0445)), closes [#171](https://github.com/kami619/agentready/issues/171)
+* **workflows:** add comment posting for [@agentready-dev](https://github.com/agentready-dev) agent ([5dff614](https://github.com/kami619/agentready/commit/5dff614cbcf43153d9463524b680746fee2b6d5f))
+
 ## [2.22.3](https://github.com/ambient-code/agentready/compare/v2.22.2...v2.22.3) (2026-01-16)
 
 
