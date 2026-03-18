@@ -12,6 +12,7 @@ from .code_quality import (
     StructuredLoggingAssessor,
     TypeAnnotationsAssessor,
 )
+from .consistency import DocstringConsistencyAssessor
 from .containers import ContainerSetupAssessor
 from .documentation import (
     ArchitectureDecisionsAssessor,
@@ -43,11 +44,16 @@ from .testing import (
     TestCoverageAssessor,
 )
 
-__all__ = ["create_all_assessors", "BaseAssessor", "LockFilesAssessor"]
+__all__ = [
+    "create_all_assessors",
+    "BaseAssessor",
+    "DocstringConsistencyAssessor",
+    "LockFilesAssessor",
+]
 
 
 def create_all_assessors() -> list[BaseAssessor]:
-    """Create all 25 assessors for assessment.
+    """Create all 26 assessors for assessment.
 
     Centralized factory function to eliminate duplication across CLI commands.
     Returns all implemented and stub assessors.
@@ -63,7 +69,8 @@ def create_all_assessors() -> list[BaseAssessor]:
         StandardLayoutAssessor(),
         DependencyPinningAssessor(),  # Renamed from LockFilesAssessor
         DependencySecurityAssessor(),  # NEW: Merged dependency_freshness + security_scanning
-        # Tier 2 Critical (10 assessors - 7 implemented, 3 stubs)
+        # Tier 2 Critical (11 assessors - 8 implemented, 3 stubs)
+        DocstringConsistencyAssessor(),  # NEW: Anti-gaming check (issue #340)
         TestCoverageAssessor(),
         PreCommitHooksAssessor(),
         ConventionalCommitsAssessor(),
