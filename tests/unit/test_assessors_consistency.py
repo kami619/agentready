@@ -331,6 +331,25 @@ def process(data, count):
         assert finding.status == "pass"
         assert finding.score == 100.0
 
+    def test_positional_only_params(self, tmp_path):
+        """Test that positional-only parameters (before /) are checked."""
+        (tmp_path / "module.py").write_text('''
+def lookup(key, /, default=None):
+    """Look up a value.
+
+    Args:
+        key: The lookup key.
+        default: Fallback value.
+    """
+    return default
+''')
+        repo = _make_repo(tmp_path)
+        assessor = DocstringConsistencyAssessor()
+        finding = assessor.assess(repo)
+
+        assert finding.status == "pass"
+        assert finding.score == 100.0
+
     def test_attribute_properties(self):
         """Test assessor attribute properties."""
         assessor = DocstringConsistencyAssessor()

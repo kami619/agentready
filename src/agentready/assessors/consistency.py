@@ -175,6 +175,10 @@ class DocstringConsistencyAssessor(BaseAssessor):
     ) -> list[str]:
         """Extract parameter names from function signature, excluding self/cls."""
         params = []
+        # Positional-only params (before / in signature)
+        for arg in node.args.posonlyargs:
+            if arg.arg not in ("self", "cls"):
+                params.append(arg.arg)
         for arg in node.args.args:
             if arg.arg not in ("self", "cls"):
                 params.append(arg.arg)
